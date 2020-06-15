@@ -93,7 +93,6 @@ router.delete('/user/posts/:id/delete', (req, res) => {
   } = req
   Post.deleteOne({ _id: id, username })
     .then((doc) => {
-      console.log('details are', doc, id, username)
       if (doc && doc.deletedCount == 1) {
         return res.status(200).json({ data: doc, status: true })
       } else {
