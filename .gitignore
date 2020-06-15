@@ -1,0 +1,15 @@
+/*/coverage
+/*/output.json
+/*/node_modules
+/*/.serverless
+/playground
+/*/*.log
+/*/build
+/*/dist
+/*/*/node_modules
+.vscode
+/*/docs/js-docs
+/dev-certs
+/*/*.next
+# Cert files
+*.p12

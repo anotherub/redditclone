@@ -1,0 +1,4 @@
+{
+  "connectionString": "mongodb+srv://umeshbhat:umeshbhat@cluster0-bmklf.mongodb.net/questionportal?retryWrites=true&w=majority",
+  "secret": "password"
+}
