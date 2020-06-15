@@ -145,7 +145,9 @@ export default function SignUp() {
           </Button>
           <Grid container justify='center'>
             <Grid item>
-              <Link to='/signin'>Already have an account? Sign in</Link>
+              <Link style={{ textDecoration: 'none' }} to='/signin'>
+                Already have an account? Sign in
+              </Link>
             </Grid>
           </Grid>
         </form>

@@ -29,7 +29,8 @@ export default function Header() {
   const classes = useStyles()
   const handleLogout = async () => {
     await dispatcher(signout())
-    history.replace('/signin')
+    // history.replace('/')
+    window.location.reload()
   }
 
   return (

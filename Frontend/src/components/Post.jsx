@@ -62,7 +62,6 @@ export default function Post({ content }) {
   const handleDeleteButton = async () => {
     setDisableButton(true)
     const result = await dispatch(deletePost(content._id))
-    console.log('***', result)
     setDisableButton(false)
     if (result?.payload?.data?.deletedCount == 1) {
       let element = document.getElementById(content._id)

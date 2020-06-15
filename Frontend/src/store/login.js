@@ -7,13 +7,10 @@ const initialState = {
 }
 
 export const signup = createAsyncThunk('loginStore/signup', async (formData, { rejectWithValue }) => {
-  console.log('data', formData)
   try {
     const { data } = await post('/api/v1/users/register', formData)
-    console.log('Data is ', data)
     return data
   } catch (err) {
-    console.log('errrror', err)
     const { response } = err
     if (!response) {
       throw err
@@ -24,10 +21,8 @@ export const signup = createAsyncThunk('loginStore/signup', async (formData, { r
 export const signin = createAsyncThunk('loginStore/signin', async (formData, { rejectWithValue }) => {
   try {
     const result = await post('/api/v1/users/authenticate', formData)
-    console.log('data is', result)
     return result
   } catch (err) {
-    console.log('errrror', err)
     const { response } = err
     if (!response) {
       throw err
@@ -45,7 +40,7 @@ const Login = createSlice({
       console.log(`${Date.now()} - TEST ACTION: `, payload.msg)
     },
     signout: (state, { payload }) => {
-      localStorage.removeItem('isLoggedIn')
+      localStorage.setItem('isLoggedIn', 'false')
       localStorage.removeItem('username')
     }
   },
@@ -58,8 +53,6 @@ const Login = createSlice({
     })
     builder.addCase(signin.fulfilled, (state, { payload }) => {
       const { data, status } = payload
-      console.log('paylod is ', payload)
-      console.log('state is ', state.isAuthenticated)
       if (status) {
         state.isAuthenticated = true
         state.userInfo = data

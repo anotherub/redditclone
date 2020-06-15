@@ -105,7 +105,6 @@ const Post = createSlice({
       let flag = null,
         type = null
       for (let i = 0; i < result.likes.length; i++) {
-        console.log('username is ', localStorage.getItem('username'))
         if (localStorage.getItem('username') === result.likes[i].username) {
           flag = 1
           type = result.likes[i].like.toString()
