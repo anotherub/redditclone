@@ -76,7 +76,21 @@ export const getPostById = createAsyncThunk('postStore/getPostById', async (id, 
     return rejectWithValue(response.data)
   }
 })
-
+export const postComment = createAsyncThunk(
+  'postStore/postComment',
+  async ({ postId, comment, parentCommentId }, { rejectWithValue }) => {
+    try {
+      const { data } = await post(`/api/v1/user/posts/${postId}/comment`, { comment, parentCommentId })
+      return data
+    } catch (err) {
+      const { response } = err
+      if (!response) {
+        throw err
+      }
+      return rejectWithValue(response.data)
+    }
+  }
+)
 const Post = createSlice({
   name: 'PostStore',
   initialState,
@@ -84,6 +98,10 @@ const Post = createSlice({
   reducers: {
     testAction: (state, { payload }) => {
       console.log(`${Date.now()} - TEST ACTION: `, payload.msg)
+    },
+    addCommentToStore: (state, { payload }) => {
+      console.log('payload is ', payload)
+      state.eachPost[payload.parentPostId].comments.push(payload)
     }
   },
 
@@ -166,6 +184,10 @@ const Post = createSlice({
 
     builder.addCase(getAllQuestions.rejected, (state, action) => {})
     builder.addCase(deletePost.fulfilled, (state, { payload }) => {})
+    builder.addCase(postComment.rejected, (state, action) => {})
+    builder.addCase(postComment.fulfilled, (state, { payload }) => {
+      console.log('commented successfully', payload)
+    })
 
     builder.addCase(deletePost.rejected, (state, action) => {
       console.log('Server error occured in deleting the post', action)
@@ -173,6 +195,6 @@ const Post = createSlice({
   }
 })
 
-export const { testAction } = Post.actions
+export const { testAction, addCommentToStore } = Post.actions
 
 export default Post.reducer
