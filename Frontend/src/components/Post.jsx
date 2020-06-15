@@ -65,7 +65,7 @@ export default function Post({ content }) {
     setDisableButton(false)
     if (result?.payload?.data?.deletedCount == 1) {
       let element = document.getElementById(content._id)
-      element.parentNode.removeChild(element)
+      element.remove()
     }
   }
 
