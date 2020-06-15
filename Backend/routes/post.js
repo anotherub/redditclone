@@ -27,8 +27,6 @@ router.get('/user/posts/:postId/get', (req, res) => {
   const {
     params: { postId }
   } = req
-  console.log('Inside get single post', postId)
-
   Post.findOne({ _id: postId })
     .then((doc) => {
       result = JSON.parse(JSON.stringify(doc))

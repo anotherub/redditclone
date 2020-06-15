@@ -60,7 +60,6 @@ export default function SignIn() {
       password
     }
     const result = await dispatcher(signin(formData))
-    console.log('result', result)
     const {
       data: { status = false, data }
     } = result.payload
@@ -69,7 +68,6 @@ export default function SignIn() {
       setUsername('')
       setPassword('')
     } else {
-      console.log('Data', data)
       localStorage.setItem('isLoggedIn', 'true')
       history.replace('/')
     }
@@ -125,12 +123,14 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href='#' variant='body2'>
+              <Link href='#' variant='body2' style={{ textDecoration: 'none' }}>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link to='/signup'>Don't have an account? Sign Up</Link>
+              <Link style={{ textDecoration: 'none' }} to='/signup'>
+                Don't have an account? Sign Up
+              </Link>
             </Grid>
           </Grid>
         </form>
