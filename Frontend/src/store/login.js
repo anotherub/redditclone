@@ -43,6 +43,10 @@ const Login = createSlice({
   reducers: {
     testAction: (state, { payload }) => {
       console.log(`${Date.now()} - TEST ACTION: `, payload.msg)
+    },
+    signout: (state, { payload }) => {
+      localStorage.removeItem('isLoggedIn')
+      localStorage.removeItem('username')
     }
   },
 
@@ -69,6 +73,6 @@ const Login = createSlice({
   }
 })
 
-export const { testAction } = Login.actions
+export const { testAction, signout } = Login.actions
 
 export default Login.reducer

@@ -7,6 +7,9 @@ import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { getUsername } from '../libs/util'
+import { signout } from '../store/login'
+import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +24,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Header() {
+  let history = useHistory()
+  const dispatcher = useDispatch()
   const classes = useStyles()
+  const handleLogout = async () => {
+    await dispatcher(signout())
+    history.replace('/signin')
+  }
 
   return (
     <div className={classes.root}>
@@ -33,7 +42,9 @@ export default function Header() {
           <Typography variant='h6' className={classes.title}>
             {getUsername()}
           </Typography>
-          <Button color='inherit'>Logout</Button>
+          <Button color='inherit' onClick={handleLogout}>
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
