@@ -90,7 +90,7 @@ const Post = createSlice({
   extraReducers: (builder) => {
     builder.addCase(postQuestion.fulfilled, (state, { payload }) => {
       const { data } = payload
-      state.posts.push(data)
+      state.posts.unshift(data)
       // state.eachPost[data._id] = data
     })
 
@@ -165,13 +165,10 @@ const Post = createSlice({
     })
 
     builder.addCase(getAllQuestions.rejected, (state, action) => {})
-    builder.addCase(deletePost.fulfilled, (state, { payload }) => {
-      const { data } = payload
-      console.log('delete object is ', data)
-    })
+    builder.addCase(deletePost.fulfilled, (state, { payload }) => {})
 
     builder.addCase(deletePost.rejected, (state, action) => {
-      console.log('Server error occured', action)
+      console.log('Server error occured in deleting the post', action)
     })
   }
 })
