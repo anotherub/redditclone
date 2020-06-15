@@ -2,8 +2,11 @@ const express = require('express')
 const http = require('http')
 const { frontendProxy } = require('./controller/httpProxy')
 const api = require('./api')
+const cors = require('cors')
 
 const app = express()
+app.use(cors())
+
 const server = http.createServer(app)
 
 app.use(/^(?!\/api\/)/, frontendProxy)

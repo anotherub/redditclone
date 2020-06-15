@@ -10,7 +10,6 @@ function Home() {
   const { posts, arePostLoaded } = useSelector((store) => store.posts)
 
   useEffect(() => {
-    console.log('getting new posts')
     const getAllPosts = async () => {
       dispatcher(getAllQuestions())
     }

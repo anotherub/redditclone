@@ -90,13 +90,12 @@ const Post = createSlice({
   extraReducers: (builder) => {
     builder.addCase(postQuestion.fulfilled, (state, { payload }) => {
       const { data } = payload
-      state.eachPost[data._id] = data
+      state.posts.push(data)
+      // state.eachPost[data._id] = data
     })
 
     builder.addCase(postQuestion.rejected, (state, action) => {
       console.log('posted unsuccessfully', action)
-
-      console.log('signup ERROR', action)
     })
     builder.addCase(getPostById.fulfilled, (state, { payload }) => {
       const { result } = payload

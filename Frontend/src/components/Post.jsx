@@ -48,7 +48,6 @@ export default function Post({ content }) {
     getPostData()
   }, [content._id])
   const classes = useStyles()
-  // console.log('contene is ', content)
   const handleLikeButton = async () => {
     setDisableButton(true)
     await dispatch(likePost(content._id))
@@ -64,13 +63,16 @@ export default function Post({ content }) {
     const result = await dispatch(deletePost(content._id))
     setDisableButton(false)
     if (result?.payload?.data?.deletedCount == 1) {
-      let element = document.getElementById(content._id)
-      element.remove()
+      setHidePost(true)
     }
   }
 
   return (
-    <Card id={content._id} className={classes.root} style={{ margin: '20px 0', width: '100%' }}>
+    <Card
+      id={content._id}
+      className={classes.root}
+      style={{ margin: '20px 0', width: '100%', display: hidePost ? 'none' : 'block' }}
+    >
       <CardContent>
         <Typography color='primary' variant='h5'>
           {content.username}

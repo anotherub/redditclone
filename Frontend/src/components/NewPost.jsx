@@ -25,8 +25,7 @@ function NewPost() {
     event.preventDefault()
     if (!post.length) return alert('Post can not be empty!')
     const formData = { post }
-    const result = await dispatcher(postQuestion(formData))
-    await dispatcher(getAllQuestions())
+    await dispatcher(postQuestion(formData))
     setPost('')
   }
   const handleInputChange = (event) => {

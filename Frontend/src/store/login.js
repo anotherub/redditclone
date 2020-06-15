@@ -61,7 +61,7 @@ const Login = createSlice({
     })
 
     builder.addCase(signin.rejected, (state, action) => {
-      console.dir('signin ERROR', action)
+      console.dir('signin ERROR occured', action)
     })
   }
 })

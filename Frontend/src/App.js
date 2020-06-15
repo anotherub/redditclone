@@ -26,7 +26,6 @@ function App() {
   )
 
   const PrivateRoute = ({ children, ...rest }) => {
-    console.log('inside privat e')
     return (
       <Route
         {...rest}
