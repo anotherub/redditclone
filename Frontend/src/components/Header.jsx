@@ -175,11 +175,16 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position='static'>
+      <AppBar position='fixed'>
         <Toolbar>
           <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='open drawer'>
             <MenuIcon />
           </IconButton>
+          <div>
+            <Typography className={classes.title} variant='h6' noWrap>
+              {getUsername()}
+            </Typography>
+          </div>
 
           <div className={classes.search}>
             <div className={classes.searchIcon}>

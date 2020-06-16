@@ -18,16 +18,16 @@ function Home() {
     getAllPosts()
   }, [])
   return (
-    <Grid container direction='column' spacing={10} style={{ maxWidth: '100vw' }}>
+    <Grid container direction='column' spacing={10}>
       <Grid item xm={12}>
         <Header />
       </Grid>
-      <Grid container direction='row' item xm={12} justify='space-evenly' spacing={10}>
+      <Grid container direction='row' item xm={12} justify='space-evenly' spacing={8}>
         <Grid item xs={2} lg={2}>
-          {/* <Sidebar /> */}
+          <Sidebar />
         </Grid>
         <Grid item xs={8} lg={7}>
-          <Grid container direction='column' style={{ margin: '50px 0px' }}>
+          <Grid container direction='column'>
             <Grid item>
               <Newpost />
             </Grid>

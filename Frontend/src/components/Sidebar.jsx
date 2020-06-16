@@ -1,149 +1,29 @@
-import React, { Fragment } from 'react'
-import {
-  Hidden,
-  Drawer,
-  Divider,
-  List,
-  ListItemIcon,
-  ListItem,
-  ListItemText,
-  CssBaseline,
-  IconButton,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  Typography,
-  ExpansionPanelDetails,
-  Box
-} from '@material-ui/core'
-import SearchSharpIcon from '@material-ui/icons/SearchSharp'
-import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import AccountBoxIcon from '@material-ui/icons/AccountBox'
-// import LocalHospitalIcon from '@material-ui/icons/LocalHospital'
-import PageviewIcon from '@material-ui/icons/Pageview'
-import {
-  MoveToInbox as InboxIcon,
-  Mail as MailIcon,
-  ChevronRight as ChevronRightIcon,
-  ChevronLeft as ChevronLeftIcon
-} from '@material-ui/icons'
-import clsx from 'clsx'
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Drawer from '@material-ui/core/Drawer'
+import AppBar from '@material-ui/core/AppBar'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Toolbar from '@material-ui/core/Toolbar'
+import List from '@material-ui/core/List'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import InboxIcon from '@material-ui/icons/MoveToInbox'
+import MailIcon from '@material-ui/icons/Mail'
 
-const Sidebar = ({ classes, container, toggles, mobileOpen, minibarOpen }) => {
-  const theme = useTheme()
-  const handleSearchClick = () => {
-    alert('handle clicked')
-  }
-
-  const navItems = (
-    <Fragment>
-      {/** COde commented for later building an expanding accordion sidebar menu */}
-      {/* <ExpansionPanel className={classes.fullSpanNoPadding}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', width: '100%' }}>
-            <MailIcon /> <Typography variant="h6">Support</Typography>
-          </div>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <List className={classes.fullSpanNoPadding}>
-            {[ 'Patient Search', 'Patient Details' ].map((text, index) => (
-              <ListItem
-                button
-                key={text}
-                className={classes.fullSpanNoPadding}
-                style={{ paddingBottom: '5px', paddingTop: '5px' }}
-              >
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </ExpansionPanelDetails>
-      </ExpansionPanel> */}
-
+export default function ClippedDrawer() {
+  return (
+    <div>
       <List>
-        {[
-          {
-            text: 'Patient Search',
-            icon: <SearchSharpIcon style={{ color: 'darkslategray' }} />,
-            clickHandler: handleSearchClick,
-            authView: 'NAV-patient_search'
-          }
-          // { text: 'User Management', icon: <AccountBoxIcon />, clickHandler: null }
-        ].map(({ text, icon, clickHandler, authView }) => (
-          <ListItem button onClick={clickHandler}>
-            <ListItemIcon>{icon}</ListItemIcon>
+        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
-    </Fragment>
-  )
-
-  return (
-    <nav aria-label='Sidebar Navigation'>
-      {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-      {/** Mobile Sidebar */}
-      <Hidden smUp implementation='css'>
-        <Drawer
-          container={container}
-          variant='temporary'
-          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-          open={mobileOpen}
-          onClose={toggles.mobileSidebar}
-          classes={{ paper: classes.drawerOpen }}
-          ModalProps={{
-            keepMounted: true // Better minibarOpen performance on mobile.
-          }}
-        >
-          <div>
-            <div className={classes.toolbar}>
-              <img
-                alt='mscripts Logo'
-                src='/mscripts-logo.png'
-                width='130rem'
-                height='auto'
-                style={{ marginLeft: '2.5rem' }}
-              />
-            </div>
-            <Divider />
-            {navItems}
-          </div>
-        </Drawer>
-      </Hidden>
-
-      <Hidden xsDown implementation='css'>
-        <Drawer
-          variant='permanent'
-          className={clsx(classes.drawer, {
-            [classes.drawerOpen]: minibarOpen,
-            [classes.drawerClose]: !minibarOpen
-          })}
-          classes={{
-            paper: clsx({
-              [classes.drawerOpen]: minibarOpen,
-              [classes.drawerClose]: !minibarOpen
-            })
-          }}
-        >
-          <div className={classes.toolbar}>
-            <img
-              alt='mscripts Logo'
-              src='/mscripts-logo.png'
-              width='130rem'
-              height='auto'
-              style={{ marginLeft: '1.8rem' }}
-            />
-            <IconButton onClick={toggles.minibar} aria-label='minibar'>
-              <ChevronLeftIcon style={{ color: 'darkslategray' }} />
-            </IconButton>
-          </div>
-          <Divider />
-          {navItems}
-        </Drawer>
-      </Hidden>
-    </nav>
+    </div>
   )
 }
-
-export default Sidebar

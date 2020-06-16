@@ -55,7 +55,6 @@ router.get('/user/posts/:postId/get', (req, res) => {
 
 router.get('/user/posts/getall', (req, res) => {
   Post.find({})
-    .limit(2)
     .sort({ time: 'desc' })
     .then((doc) => {
       res.status(200).json({ data: doc })
