@@ -2,10 +2,12 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
 import login from './login'
 import post from './post'
+import users from './users'
 
 const reducers = combineReducers({
   login,
-  posts: post
+  posts: post,
+  users
 })
 
 export const store = configureStore({

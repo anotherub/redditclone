@@ -32,7 +32,6 @@ function SingleComment({ comment, refreshFunction, postId }) {
     setCommentReply(event.target.value)
   }
   const handleOpenReply = () => {
-    console.log('open reply called')
     setOpenReply(!openReply)
   }
 
@@ -87,7 +86,7 @@ function SingleComment({ comment, refreshFunction, postId }) {
               </form>
             </>
           ) : (
-            <div onClick={handleOpenReply}>
+            <div style={{ marginLeft: '10px' }} onClick={handleOpenReply}>
               Reply
               <ArrowDropDownRoundedIcon />
             </div>
