@@ -46,9 +46,13 @@ function getCurrent(req, res, next) {
 }
 
 function getById(req, res, next) {
+  const {
+    params: { id }
+  } = req
+
   userService
-    .getById(req.params.id)
-    .then((user) => (user ? res.json(user) : res.sendStatus(404)))
+    .find(id)
+    .then((user) => (user ? res.json({ status: true, data: user }) : res.json({ status: false, data: user })))
     .catch((err) => next(err))
 }
 

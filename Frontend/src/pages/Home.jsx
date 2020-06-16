@@ -6,6 +6,7 @@ import Post from '../components/Post'
 import Grid from '@material-ui/core/Grid'
 import Header from '../components/Header'
 import ListAllUsers from '../components/ListAllUsers'
+import Sidebar from '../components/Sidebar'
 function Home() {
   const dispatcher = useDispatch()
   const { posts, arePostLoaded, eachPost } = useSelector((store) => store.posts)
@@ -22,7 +23,9 @@ function Home() {
         <Header />
       </Grid>
       <Grid container direction='row' item xm={12} justify='space-evenly' spacing={10}>
-        <Grid item xs={2} lg={2}></Grid>
+        <Grid item xs={2} lg={2}>
+          {/* <Sidebar /> */}
+        </Grid>
         <Grid item xs={8} lg={7}>
           <Grid container direction='column' style={{ margin: '50px 0px' }}>
             <Grid item>

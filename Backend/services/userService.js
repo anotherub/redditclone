@@ -10,7 +10,8 @@ module.exports = {
   getById,
   create,
   update,
-  delete: _delete
+  delete: _delete,
+  find
 }
 
 async function authenticate({ username, password }) {
@@ -30,6 +31,10 @@ async function getAll() {
 
 async function getById(id) {
   return await User.findById(id)
+}
+async function find(id) {
+  var regex = new RegExp(id, 'i')
+  return await User.find({ username: regex })
 }
 
 async function create(userParam) {
