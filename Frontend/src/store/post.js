@@ -18,7 +18,7 @@ export const postQuestion = createAsyncThunk('postStore/postQuestion', async (fo
 export const deletePost = createAsyncThunk('postStore/deletePost', async (id, { rejectWithValue }) => {
   try {
     const { data } = await del(`/api/v1/user/posts/${id}/delete`, id)
-    return data
+    return { data, id }
   } catch (err) {
     const { response } = err
     if (!response) {
@@ -76,7 +76,21 @@ export const getPostById = createAsyncThunk('postStore/getPostById', async (id, 
     return rejectWithValue(response.data)
   }
 })
-
+export const postComment = createAsyncThunk(
+  'postStore/postComment',
+  async ({ postId, comment, parentCommentId }, { rejectWithValue }) => {
+    try {
+      const { data } = await post(`/api/v1/user/posts/${postId}/comment`, { comment, parentCommentId })
+      return data
+    } catch (err) {
+      const { response } = err
+      if (!response) {
+        throw err
+      }
+      return rejectWithValue(response.data)
+    }
+  }
+)
 const Post = createSlice({
   name: 'PostStore',
   initialState,
@@ -84,19 +98,21 @@ const Post = createSlice({
   reducers: {
     testAction: (state, { payload }) => {
       console.log(`${Date.now()} - TEST ACTION: `, payload.msg)
+    },
+    addCommentToStore: (state, { payload }) => {
+      state.eachPost[payload.parentPostId].comments.push(payload)
     }
   },
 
   extraReducers: (builder) => {
     builder.addCase(postQuestion.fulfilled, (state, { payload }) => {
       const { data } = payload
-      state.eachPost[data._id] = data
+      state.posts.unshift(data)
+      // state.eachPost[data._id] = data
     })
 
     builder.addCase(postQuestion.rejected, (state, action) => {
       console.log('posted unsuccessfully', action)
-
-      console.log('signup ERROR', action)
     })
     builder.addCase(getPostById.fulfilled, (state, { payload }) => {
       const { result } = payload
@@ -166,17 +182,40 @@ const Post = createSlice({
     })
 
     builder.addCase(getAllQuestions.rejected, (state, action) => {})
-    builder.addCase(deletePost.fulfilled, (state, { payload }) => {
-      const { data } = payload
-      console.log('delete object is ', data)
+    builder.addCase(
+      deletePost.fulfilled,
+      (
+        state,
+        {
+          payload: {
+            data: { data },
+            id
+          }
+        }
+      ) => {
+        console.log('deletes ', data, id)
+        if (data?.deletedCount == 1) {
+          state.posts.splice(
+            state.posts.findIndex((post) => {
+              return post.id === id
+            }),
+            1
+          )
+        }
+      }
+    )
+
+    builder.addCase(postComment.rejected, (state, action) => {})
+    builder.addCase(postComment.fulfilled, (state, { payload }) => {
+      console.log('commented successfully', payload)
     })
 
     builder.addCase(deletePost.rejected, (state, action) => {
-      console.log('Server error occured', action)
+      console.log('Server error occured in deleting the post', action)
     })
   }
 })
 
-export const { testAction } = Post.actions
+export const { testAction, addCommentToStore } = Post.actions
 
 export default Post.reducer

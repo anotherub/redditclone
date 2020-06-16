@@ -55,7 +55,7 @@ router.get('/user/posts/:postId/get', (req, res) => {
 
 router.get('/user/posts/getall', (req, res) => {
   Post.find({})
-    .limit(5)
+    .limit(1)
     .sort({ time: 'desc' })
     .then((doc) => {
       res.status(200).json({ data: doc })
@@ -72,12 +72,12 @@ router.post('/user/posts/:id/comment', (req, res) => {
     body: { comment, parentCommentId = null },
     user: { username }
   } = req
-
+  console.log('res is ', req.body)
   let query = Comment({ parentPostId: id, parentCommentId, comment, username })
   query
     .save()
     .then((doc) => {
-      res.status(200).json({ data: doc })
+      res.status(200).json({ data: doc, status: true })
     })
     .catch((error) => {
       console.log('error ', error)
@@ -92,6 +92,7 @@ router.delete('/user/posts/:id/delete', (req, res) => {
   Post.deleteOne({ _id: id, username })
     .then((doc) => {
       if (doc && doc.deletedCount == 1) {
+        console.log('post deleted')
         return res.status(200).json({ data: doc, status: true })
       } else {
         return res.status(200).json({ data: 'Unauthorized or Resource doesnt not exist', status: false })

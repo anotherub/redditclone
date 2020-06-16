@@ -13,6 +13,7 @@ router.delete('/users/:id', _delete)
 module.exports = router
 
 function authenticate(req, res, next) {
+  console.log('auth called')
   userService
     .authenticate(req.body)
     .then((user) =>
