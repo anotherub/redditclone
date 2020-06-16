@@ -8,7 +8,7 @@ import Header from '../components/Header'
 import ListAllUsers from '../components/ListAllUsers'
 function Home() {
   const dispatcher = useDispatch()
-  const { posts, arePostLoaded } = useSelector((store) => store.posts)
+  const { posts, arePostLoaded, eachPost } = useSelector((store) => store.posts)
 
   useEffect(() => {
     const getAllPosts = async () => {

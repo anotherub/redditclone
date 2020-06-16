@@ -57,7 +57,8 @@ export default function Post({ content }) {
   const dispatch = useDispatch()
   const [disableButton, setDisableButton] = useState(false)
   const [expanded, setExpanded] = React.useState(false)
-  const postStats = useSelector((state) => state.posts.eachPost[content._id])
+  const posts = useSelector((state) => state.posts)
+  const postStats = posts?.eachPost[content._id]
   const commentList = postStats?.comments
 
   useEffect(() => {
