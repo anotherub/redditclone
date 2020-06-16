@@ -20,7 +20,6 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import Collapse from '@material-ui/core/Collapse'
-import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import { red } from '@material-ui/core/colors'
@@ -56,12 +55,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Post({ content }) {
   const dispatch = useDispatch()
-
   const [disableButton, setDisableButton] = useState(false)
-  const [hidePost, setHidePost] = useState(false)
-  const [expanded, setExpanded] = React.useState(false)
-
+  const [expanded, setExpanded] = React.useState(true)
   const postStats = useSelector((state) => state.posts.eachPost[content._id])
+  const commentList = postStats?.comments
 
   useEffect(() => {
     const getPostData = async () => {
@@ -71,7 +68,6 @@ export default function Post({ content }) {
   }, [])
 
   const updateFunction = (doc) => {
-    console.log('refresh function called', doc)
     dispatch(addCommentToStore(doc))
   }
   const classes = useStyles()
@@ -87,11 +83,8 @@ export default function Post({ content }) {
   }
   const handleDeleteButton = async () => {
     setDisableButton(true)
-    const result = await dispatch(deletePost(content._id))
+    await dispatch(deletePost(content._id))
     setDisableButton(false)
-    if (result?.payload?.data?.deletedCount == 1) {
-      setHidePost(true)
-    }
   }
 
   const handleExpandClick = () => {
@@ -99,11 +92,7 @@ export default function Post({ content }) {
   }
   return (
     <Grid container direction='column'>
-      <Card
-        id={content._id}
-        className={classes.root}
-        style={{ margin: '20px 0', width: '100%', display: hidePost ? 'none' : 'block' }}
-      >
+      <Card id={content._id} className={classes.root} style={{ margin: '20px 0', width: '100%' }}>
         <Grid item>
           <CardContent style={{ backgroundColor: '#E8E8E8' }}>
             <Typography color='primary' variant='h6'>
@@ -133,7 +122,6 @@ export default function Post({ content }) {
               })}
               onClick={handleExpandClick}
             >
-              {/* <ExpandMoreIcon /> */}
               <ChatBubbleOutlineIcon />
               {postStats?.totalComments || 0}
             </IconButton>
@@ -152,7 +140,7 @@ export default function Post({ content }) {
             <RecursiveContainer
               postId={content._id}
               refreshFunction={updateFunction}
-              commentList={postStats?.comments}
+              commentList={commentList?.length > 0 ? [...commentList].reverse() : commentList}
             />
           </Collapse>
         </Grid>

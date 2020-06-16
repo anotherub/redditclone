@@ -17,21 +17,21 @@ function Home() {
   }, [])
   return (
     <Grid container direction='column' spacing={10}>
-      <Grid item>
+      <Grid item xm={12}>
         <Header />
       </Grid>
       <Grid item>
-        <Grid container direction='row' justify='stretch'>
-          <Grid item xl={3} lg={3} sm={3}></Grid>
-          <Grid item xl={6} lg={6} sm={6}>
-            <Grid container direction='column' justify='center' alignItems='stretch' style={{ margin: '10 100px' }}>
+        <Grid container>
+          <Grid item xs={2} lg={2}></Grid>
+          <Grid item xs={8} lg={6}>
+            <Grid container direction='column' style={{ margin: '50px 0px' }}>
               <Grid item>
                 <Newpost />
               </Grid>
               <Grid item>{arePostLoaded && posts.map((data) => <Post content={data} />)}</Grid>
             </Grid>
           </Grid>
-          <Grid item xl={3} lg={3} sm={3}></Grid>
+          <Grid item xs={2} lg={2}></Grid>
         </Grid>
       </Grid>
     </Grid>

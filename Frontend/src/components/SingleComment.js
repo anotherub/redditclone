@@ -7,7 +7,9 @@ import { Button, Grid, Card, CardContent, Typography } from '@material-ui/core'
 import dayjs from 'dayjs'
 import ReplyIcon from '@material-ui/icons/Reply'
 import CloseIcon from '@material-ui/icons/Close'
+import ArrowDropDownRoundedIcon from '@material-ui/icons/ArrowDropDownRounded'
 import { postComment, addCommentToStore } from '../store/post'
+import ArrowDropUpRoundedIcon from '@material-ui/icons/ArrowDropUpRounded'
 function SingleComment({ comment, refreshFunction, postId }) {
   const [commentReply, setCommentReply] = useState('')
   const [openReply, setOpenReply] = useState(false)
@@ -30,6 +32,7 @@ function SingleComment({ comment, refreshFunction, postId }) {
     setCommentReply(event.target.value)
   }
   const handleOpenReply = () => {
+    console.log('open reply called')
     setOpenReply(!openReply)
   }
 
@@ -38,7 +41,7 @@ function SingleComment({ comment, refreshFunction, postId }) {
       <hr />
 
       <Card>
-        <CardContent onClick={handleOpenReply}>
+        <CardContent>
           <Typography color='primary' variant='h6'>
             {comment.username}
           </Typography>
@@ -50,41 +53,46 @@ function SingleComment({ comment, refreshFunction, postId }) {
             {dayjs(comment.time).format('h:mm:ss A')}
           </Typography>
         </CardContent>
-        {openReply ? (
-          <>
-            <span onClick={handleOpenReply} style={{ float: 'right', display: 'flex' }}>
-              <CloseIcon />
-            </span>
-            <form onSubmit={handleFormSubmit}>
-              <div style={{ position: 'relative', marginleft: '30px' }}>
-                <TextField
-                  id='outlined-multiline-static'
-                  label='Reply back'
-                  multiline
-                  rows={2}
-                  defaultValue={commentReply}
-                  variant='outlined'
-                  placeholder='Be polite online!'
-                  onChange={handleInputChange}
-                  value={commentReply}
-                  style={{ width: '100%' }}
-                ></TextField>
-                <Button
-                  variant='contained'
-                  color='Primary'
-                  onClick={handleFormSubmit}
-                  style={{ position: 'absolute', bottom: '5px', right: '5px' }}
-                >
-                  Reply
-                </Button>
-              </div>
-            </form>
-          </>
-        ) : (
-          <span onClick={handleOpenReply} style={{ float: 'right', display: 'flex' }}>
-            <ReplyIcon />
-          </span>
-        )}
+
+        <div style={{ marginLeft: '5px' }}>
+          {openReply ? (
+            <>
+              <span onClick={handleOpenReply}>
+                Close
+                <ArrowDropUpRoundedIcon />
+              </span>
+              <form onSubmit={handleFormSubmit}>
+                <div style={{ position: 'relative', margin: '2px 5px' }}>
+                  <TextField
+                    id='outlined-multiline-static'
+                    label='Enter your reply'
+                    multiline
+                    rows={2}
+                    defaultValue={commentReply}
+                    variant='outlined'
+                    placeholder='Be polite online!'
+                    onChange={handleInputChange}
+                    value={commentReply}
+                    style={{ width: '100%' }}
+                  ></TextField>
+                  <Button
+                    variant='contained'
+                    color='Primary'
+                    onClick={handleFormSubmit}
+                    style={{ position: 'absolute', bottom: '5px', right: '5px' }}
+                  >
+                    Reply
+                  </Button>
+                </div>
+              </form>
+            </>
+          ) : (
+            <div onClick={handleOpenReply}>
+              Reply
+              <ArrowDropDownRoundedIcon />
+            </div>
+          )}
+        </div>
       </Card>
     </div>
   )

@@ -6,9 +6,7 @@ import { postComment } from '../store/post'
 import { useDispatch, useSelector } from 'react-redux'
 import ReplyComment from './ReplyComment'
 
-function RecursiveContainer({ postId, refreshFunction }) {
-  const postStats = useSelector((state) => state.posts.eachPost[postId])
-  const commentList = postStats.comments
+function RecursiveContainer({ postId, refreshFunction, commentList }) {
   const [comment, setComment] = useState('')
   const dispatcher = useDispatch()
   const handleFormSubmit = async (event) => {
@@ -29,22 +27,22 @@ function RecursiveContainer({ postId, refreshFunction }) {
   return (
     <Grid style={{ width: 'inherit' }}>
       <br />
-      Replies:
-      {console.log('comments are', commentList)}
-      {commentList?.map(
-        (comment, index) =>
-          !comment.parentCommentId && (
-            <>
-              <SingleComment comment={comment} postId={postId} refreshFunction={refreshFunction} />
-              <ReplyComment
-                commentList={commentList}
-                parentCommentId={comment._id}
-                postId={postId}
-                refreshFunction={refreshFunction}
-              />
-            </>
-          )
-      )}
+      {commentList?.length ? `Total Reply:${commentList.length}` : 'Wow, it looks so empty!'}
+      {commentList?.length > 0 &&
+        commentList.map(
+          (comment, index) =>
+            !comment.parentCommentId && (
+              <>
+                <SingleComment comment={comment} postId={postId} refreshFunction={refreshFunction} />
+                <ReplyComment
+                  commentList={commentList}
+                  parentCommentId={comment._id}
+                  postId={postId}
+                  refreshFunction={refreshFunction}
+                />
+              </>
+            )
+        )}
       <form onSubmit={handleFormSubmit}>
         <div style={{ position: 'relative', margin: '10px 5px' }}>
           <TextField

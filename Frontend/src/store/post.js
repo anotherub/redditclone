@@ -18,7 +18,7 @@ export const postQuestion = createAsyncThunk('postStore/postQuestion', async (fo
 export const deletePost = createAsyncThunk('postStore/deletePost', async (id, { rejectWithValue }) => {
   try {
     const { data } = await del(`/api/v1/user/posts/${id}/delete`, id)
-    return data
+    return { data, id }
   } catch (err) {
     const { response } = err
     if (!response) {
@@ -100,7 +100,6 @@ const Post = createSlice({
       console.log(`${Date.now()} - TEST ACTION: `, payload.msg)
     },
     addCommentToStore: (state, { payload }) => {
-      console.log('payload is ', payload)
       state.eachPost[payload.parentPostId].comments.push(payload)
     }
   },
@@ -183,7 +182,29 @@ const Post = createSlice({
     })
 
     builder.addCase(getAllQuestions.rejected, (state, action) => {})
-    builder.addCase(deletePost.fulfilled, (state, { payload }) => {})
+    builder.addCase(
+      deletePost.fulfilled,
+      (
+        state,
+        {
+          payload: {
+            data: { data },
+            id
+          }
+        }
+      ) => {
+        console.log('deletes ', data, id)
+        if (data?.deletedCount == 1) {
+          state.posts.splice(
+            state.posts.findIndex((post) => {
+              return post.id === id
+            }),
+            1
+          )
+        }
+      }
+    )
+
     builder.addCase(postComment.rejected, (state, action) => {})
     builder.addCase(postComment.fulfilled, (state, { payload }) => {
       console.log('commented successfully', payload)
