@@ -149,14 +149,11 @@ export default function Post({ content }) {
         <Grid item>
           <Collapse in={expanded} timeout='auto' unmountOnExit>
             <hr width={2} />
-
-            {postStats?.comments ? (
-              <RecursiveContainer
-                postId={content._id}
-                refreshFunction={updateFunction}
-                commentList={postStats.comments}
-              />
-            ) : null}
+            <RecursiveContainer
+              postId={content._id}
+              refreshFunction={updateFunction}
+              commentList={postStats?.comments}
+            />
           </Collapse>
         </Grid>
       </Card>

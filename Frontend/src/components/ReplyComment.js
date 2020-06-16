@@ -6,30 +6,15 @@ function ReplyComment({ commentList, postId, refreshFunction, parentCommentId })
   const [showReplyComments, setShowReplyComments] = useState(false)
   useEffect(() => {
     let commentNumber = 0
-    commentList.map((comment) => {
-      if (comment.parentCommentId == parentCommentId) {
-        commentNumber++
-      }
-      setChildCommentCount(commentNumber)
-    })
+    if (commentList?.length) {
+      commentList.map((comment) => {
+        if (comment.parentCommentId == parentCommentId) {
+          commentNumber++
+        }
+        setChildCommentCount(commentNumber)
+      })
+    }
   }, [])
-  const renderReplyComment = (parentCommentId) => {
-    commentList.map((comment, index) => (
-      <>
-        {comment.parentCommentId == parentCommentId ? (
-          <div style={{ marginLeft: '30px', width: '90%' }}>
-            <SingleComment comment={comment} postId={postId} refreshFunction={refreshFunction} />
-            <ReplyComment
-              comment={comment}
-              postId={postId}
-              parentCommentId={comment._id}
-              refreshFunction={refreshFunction}
-            />
-          </div>
-        ) : null}
-      </>
-    ))
-  }
   const handleChange = () => {
     console.log('show comments', !showReplyComments)
     setShowReplyComments(!showReplyComments)
@@ -44,13 +29,14 @@ function ReplyComment({ commentList, postId, refreshFunction, parentCommentId })
         </p>
       )}
       {showReplyComments &&
-        commentList?.map((comment, index) => (
+        commentList?.length &&
+        commentList.map((comment, index) => (
           <>
             {comment.parentCommentId === parentCommentId && (
               <div style={{ marginLeft: '30px', width: '90%' }}>
                 <SingleComment comment={comment} postId={postId} refreshFunction={refreshFunction} />
                 <ReplyComment
-                  comment={commentList}
+                  commentList={commentList}
                   postId={postId}
                   parentCommentId={comment._id}
                   refreshFunction={refreshFunction}
