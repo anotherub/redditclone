@@ -3,8 +3,15 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const app = express()
 
-app.use(cors())
+const corsOptions = {
+  origin: 'http://localhost:3002',
+  methods: 'GET,HEAD,POST,PATCH,DELETE,OPTIONS',
+  credentials: true, // required to pass
+  allowedHeaders: 'Content-Type, X-Requested-With'
+}
+app.use(cors(corsOptions))
 app.use(cookieParser())
+
 const bodyParser = require('body-parser')
 const apiV1 = require('./api/v1/index')
 const jwt = require('./_helpers/jwt')

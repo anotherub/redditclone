@@ -6,7 +6,7 @@ function ReplyComment({ commentList, postId, refreshFunction, parentCommentId })
   const [showReplyComments, setShowReplyComments] = useState(false)
   useEffect(() => {
     let commentNumber = 0
-    commentList?.map((comment) => {
+    commentList.map((comment) => {
       if (comment.parentCommentId == parentCommentId) {
         commentNumber++
       }
@@ -14,9 +14,9 @@ function ReplyComment({ commentList, postId, refreshFunction, parentCommentId })
     })
   }, [])
   const renderReplyComment = (parentCommentId) => {
-    commentList?.map((comment, index) => (
+    commentList.map((comment, index) => (
       <>
-        {comment.parentCommentId === parentCommentId ? (
+        {comment.parentCommentId == parentCommentId ? (
           <div style={{ marginLeft: '30px', width: '90%' }}>
             <SingleComment comment={comment} postId={postId} refreshFunction={refreshFunction} />
             <ReplyComment

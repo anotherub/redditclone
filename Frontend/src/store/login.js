@@ -20,7 +20,8 @@ export const signup = createAsyncThunk('loginStore/signup', async (formData, { r
 })
 export const signin = createAsyncThunk('loginStore/signin', async (formData, { rejectWithValue }) => {
   try {
-    const result = await post('/api/v1/users/authenticate', formData)
+    console.log('XX', JSON.stringify(formData))
+    const result = await post('/api/v1/users/authenticate', JSON.stringify(formData))
     return result
   } catch (err) {
     const { response } = err
@@ -61,7 +62,7 @@ const Login = createSlice({
     })
 
     builder.addCase(signin.rejected, (state, action) => {
-      console.dir('signin ERROR occured', action)
+      console.log('signin ERROR occured', action)
     })
   }
 })

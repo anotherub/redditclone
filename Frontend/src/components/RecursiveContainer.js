@@ -9,7 +9,6 @@ import ReplyComment from './ReplyComment'
 function RecursiveContainer({ postId, refreshFunction }) {
   const postStats = useSelector((state) => state.posts.eachPost[postId])
   const commentList = postStats.comments
-
   const [comment, setComment] = useState('')
   const dispatcher = useDispatch()
   const handleFormSubmit = async (event) => {
