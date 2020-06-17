@@ -13,7 +13,6 @@ import Card from '@material-ui/core/Card'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 360,
     backgroundColor: theme.palette.background.paper
   }
 }))
@@ -24,22 +23,19 @@ export default function ClippedDrawer() {
   const classes = useStyles()
 
   return (
-    <Grid Container className={classes.root}>
-      <List component='nav' aria-label='main mailbox folders'>
-        <ListItem button>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary='Inbox' />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary='Drafts' />
-        </ListItem>
-      </List>
-      <Divider />
-    </Grid>
+    <List component='nav' aria-label='main mailbox folders '>
+      <ListItem button>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText primary='Inbox' />
+      </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <DraftsIcon />
+        </ListItemIcon>
+        <ListItemText primary='Drafts' />
+      </ListItem>
+    </List>
   )
 }

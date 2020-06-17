@@ -175,7 +175,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position='fixed'>
+      <AppBar position='fixed' style={{ height: '60px' }}>
         <Toolbar>
           <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='open drawer'>
             <MenuIcon />
