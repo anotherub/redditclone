@@ -100,7 +100,12 @@ const Post = createSlice({
       console.log(`${Date.now()} - TEST ACTION: `, payload.msg)
     },
     addCommentToStore: (state, { payload }) => {
-      state.eachPost[payload.parentPostId].comments.push(payload)
+      if (state.eachPost[payload.parentPostId].comments?.length) {
+        state.eachPost[payload.parentPostId].comments.push(payload)
+      } else {
+        state.eachPost[payload.parentPostId].comments = []
+        state.eachPost[payload.parentPostId].comments.push(payload)
+      }
     }
   },
 
@@ -207,7 +212,7 @@ const Post = createSlice({
         if (data?.deletedCount == 1) {
           state.posts.splice(
             state.posts.findIndex((post) => {
-              return post.id === id
+              return post._id === id
             }),
             1
           )

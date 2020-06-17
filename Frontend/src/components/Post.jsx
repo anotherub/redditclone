@@ -137,7 +137,7 @@ export default function Post({ content }) {
         </Grid>
         <Grid item>
           <Collapse in={expanded} timeout='auto' unmountOnExit>
-            <hr width={2} />
+            <hr />
             <RecursiveContainer
               postId={content._id}
               refreshFunction={updateFunction}

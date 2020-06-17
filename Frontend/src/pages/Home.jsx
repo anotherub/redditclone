@@ -23,7 +23,7 @@ function Home() {
         <Header />
       </Grid>
       <Grid container direction='row' item xm={12} justify='space-evenly' spacing={8}>
-        <Grid item xs={2} lg={2}>
+        <Grid item xs={2} lg={2} style={{ height: '100vh' }}>
           <Sidebar />
         </Grid>
         <Grid item xs={8} lg={7}>
