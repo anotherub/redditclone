@@ -43,6 +43,7 @@ const Login = createSlice({
     signout: (state, { payload }) => {
       localStorage.setItem('isLoggedIn', 'false')
       localStorage.removeItem('username')
+      state = undefined
     }
   },
 

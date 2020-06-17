@@ -100,7 +100,12 @@ const Post = createSlice({
       console.log(`${Date.now()} - TEST ACTION: `, payload.msg)
     },
     addCommentToStore: (state, { payload }) => {
-      state.eachPost[payload.parentPostId].comments.push(payload)
+      if (state.eachPost[payload.parentPostId].comments?.length) {
+        state.eachPost[payload.parentPostId].comments.push(payload)
+      } else {
+        state.eachPost[payload.parentPostId].comments = []
+        state.eachPost[payload.parentPostId].comments.push(payload)
+      }
     }
   },
 
@@ -108,6 +113,7 @@ const Post = createSlice({
     builder.addCase(postQuestion.fulfilled, (state, { payload }) => {
       const { data } = payload
       state.posts.unshift(data)
+      state.eachPost[data._id] = data
       // state.eachPost[data._id] = data
     })
 
@@ -143,17 +149,21 @@ const Post = createSlice({
       } = payload
 
       if (status) {
+        //post has been liked sucessfully
         const {
           data: { data }
         } = payload
-
-        if (state.eachPost[data.parentPostId].isPostLiked === 'false') {
+        //check if the post is already prsent in the stor, thus remove its "unlike"
+        if (state.eachPost[data.parentPostId]?.isPostLiked === 'false') {
           state.eachPost[data.parentPostId].totalDislikes--
         }
-        state.eachPost[data.parentPostId].totalLikes++
 
         state.eachPost[data.parentPostId].isPostLiked = 'true'
+        state.eachPost[data.parentPostId].totalLikes = state.eachPost[data.parentPostId].totalLikes
+          ? state.eachPost[data.parentPostId].totalLikes++
+          : 1
       } else {
+        //post has  been already liked, thus removing it
         state.eachPost[data.parentPostId].totalLikes--
         state.eachPost[data.parentPostId].isPostLiked = null
       }
@@ -163,12 +173,17 @@ const Post = createSlice({
     builder.addCase(unlikePost.fulfilled, (state, { payload }) => {
       const { status, data } = payload
       if (status) {
-        if (state.eachPost[data.parentPostId].isPostLiked === 'true') {
+        if (state.eachPost[data.parentPostId]?.isPostLiked === 'true') {
           state.eachPost[data.parentPostId].totalLikes--
         }
         state.eachPost[data.parentPostId].totalDislikes++
         state.eachPost[data.parentPostId].isPostLiked = 'false'
+        state.eachPost[data.parentPostId].totalDislikes = state.eachPost[data.parentPostId].totalDislikes
+          ? state.eachPost[data.parentPostId].totalDislikes++
+          : 1
       } else {
+        //post has  been already disliked, thus remvoing dislike
+
         state.eachPost[data.parentPostId].totalDislikes--
         state.eachPost[data.parentPostId].isPostLiked = null
       }
@@ -197,7 +212,7 @@ const Post = createSlice({
         if (data?.deletedCount == 1) {
           state.posts.splice(
             state.posts.findIndex((post) => {
-              return post.id === id
+              return post._id === id
             }),
             1
           )

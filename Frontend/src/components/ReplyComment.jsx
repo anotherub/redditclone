@@ -57,8 +57,17 @@ function ReplyComment({ commentList, postId, refreshFunction, parentCommentId })
   return (
     <div>
       {childCommentCount > 0 && (
-        <div onClick={handleChange} style={{ fontSize: '14px', marginLeft: '10px', color: 'gray' }}>
-          view {childCommentCount} more {childCommentCount.length > 1 ? 'replies' : 'reply'}
+        <div
+          onClick={handleChange}
+          style={{ fontSize: '14px', margin: '10px 10px', color: 'gray', display: 'flex', alignItems: 'center' }}
+        >
+          {expanded ? (
+            <span>
+              view {childCommentCount} more {childCommentCount.length > 1 ? 'replies' : 'reply'}
+            </span>
+          ) : (
+            'Hide Replies'
+          )}
           <PublishTwoToneIcon
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded

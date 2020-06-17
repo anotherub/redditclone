@@ -56,8 +56,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Post({ content }) {
   const dispatch = useDispatch()
   const [disableButton, setDisableButton] = useState(false)
-  const [expanded, setExpanded] = React.useState(true)
-  const postStats = useSelector((state) => state.posts.eachPost[content._id])
+  const [expanded, setExpanded] = React.useState(false)
+  const posts = useSelector((state) => state.posts)
+  const postStats = posts?.eachPost[content._id]
   const commentList = postStats?.comments
 
   useEffect(() => {
@@ -136,7 +137,7 @@ export default function Post({ content }) {
         </Grid>
         <Grid item>
           <Collapse in={expanded} timeout='auto' unmountOnExit>
-            <hr width={2} />
+            <hr />
             <RecursiveContainer
               postId={content._id}
               refreshFunction={updateFunction}

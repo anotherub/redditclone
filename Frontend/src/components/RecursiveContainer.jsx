@@ -27,7 +27,9 @@ function RecursiveContainer({ postId, refreshFunction, commentList }) {
   return (
     <Grid style={{ width: 'inherit' }}>
       <br />
-      {commentList?.length ? `Total Reply:${commentList.length}` : 'Wow, it looks so empty!'}
+      <span style={{ marginLeft: '10px' }}>
+        {commentList?.length ? `Total Reply:${commentList.length}` : 'Wow, it looks so empty!'}
+      </span>
       {commentList?.length > 0 &&
         commentList.map(
           (comment, index) =>
