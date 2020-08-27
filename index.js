@@ -29,5 +29,5 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
 app.listen(3001, () => {
-  console.log('Service is up and running')
+  console.log('Service is up and running on 3001')
 })
