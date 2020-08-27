@@ -2,6 +2,7 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const app = express()
+const path = require('path')
 
 const corsOptions = {
   origin: 'http://localhost:3002',
@@ -23,6 +24,10 @@ app.use(jwt())
 app.use('/api/v1', apiV1)
 app.use(errorHandler)
 
+app.use(express.static(path.join(__dirname, 'build')))
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'))
+})
 app.listen(3001, () => {
   console.log('Service is up and running')
 })

@@ -4,7 +4,8 @@
 /*/.serverless
 /playground
 /*/*.log
-/*/build
+# /build
+Frontend/build
 /*/dist
 /*/*/node_modules
 .vscode
